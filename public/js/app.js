@@ -45676,16 +45676,17 @@ Vue.use(buefy__WEBPACK_IMPORTED_MODULE_0___default.a); // Vue.component('example
 
 var app = new Vue({
   el: '#app',
-
-  /*props: {
-      permissions: permissions,
-  },*/
+  props: {
+    permissions: permissions,
+    rolesSelected: rolesSelected
+  },
   data: {
     auto_password: true,
     password_options: 'keep',
     permissionType: 'basic',
     resource: '',
-    crudSelected: ['create', 'read', 'update', 'delete']
+    crudSelected: ['create', 'read', 'update', 'delete'],
+    rolesSelected: rolesSelected
   },
   methods: {
     crudName: function crudName(item) {

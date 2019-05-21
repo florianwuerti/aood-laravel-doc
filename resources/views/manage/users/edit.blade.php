@@ -52,6 +52,19 @@
                         </div>
                     </div>
                 </div> <!-- end of .column -->
+
+                <div class="column">
+                    <label for="roles" class="label">Roles:</label>
+                    <input type="hidden" name="roles" :value="rolesSelected" {{old('rolesSelected')}}/>
+
+                    @foreach ($roles as $role)
+                        <div class="field">
+                            <b-checkbox v-model="rolesSelected"
+                                        :native-value="{{$role->id}}">{{$role->display_name}}</b-checkbox>
+                        </div>
+                    @endforeach
+                </div>
+
             </div>
             <div class="columns">
                 <div class="column">
@@ -62,4 +75,18 @@
         </form>
 
     </div> <!-- end of .flex-container -->
+@endsection
+
+@section('scripts')
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                password_options: 'keep',
+                rolesSelected: {!! $user->roles->pluck('id') !!}
+            }
+        });
+    </script>
+
 @endsection

@@ -10,7 +10,8 @@
                 <h1 class="title">View User Details</h1>
             </div> <!-- end of column -->
             <div class="column">
-                <a href="{{route('users.edit', $user->id)}}" class="button is-primary is-pulled-right"><i class="fa fa-user m-r-10"></i> Edit User</a>
+                <a href="{{route('users.edit', $user->id)}}" class="button is-primary is-pulled-right"><i
+                            class="fa fa-user m-r-10"></i> Edit User</a>
             </div>
         </div>
         <hr class="m-t-0">
@@ -24,7 +25,16 @@
                     <label for="email" class="label">Email</label>
                     <div class="p-l-0 p-t-0">{{$user->email}}</div>
                 </div>
-
+                <div class="field">
+                    <label for="text" class="label">Roles</label>
+                    <ul>
+                        @forelse ($user->roles as $role)
+                            <li>{{$role->display_name}} ({{$role->description}})</li>
+                        @empty
+                            <p>This user has not been assigned any roles yet</p>
+                        @endforelse
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -9,15 +9,17 @@ Vue.use(Buefy);
 
 var app = new Vue({
     el: '#app',
-    /*props: {
+    props: {
         permissions: permissions,
-    },*/
+        rolesSelected: rolesSelected
+    },
     data: {
         auto_password: true,
         password_options: 'keep',
         permissionType: 'basic',
         resource: '',
         crudSelected: ['create', 'read', 'update', 'delete'],
+        rolesSelected: rolesSelected
     },
     methods: {
         crudName: function (item) {

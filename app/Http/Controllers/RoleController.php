@@ -47,7 +47,7 @@ class RoleController extends Controller {
 			'description'  => 'sometimes|max:255'
 		] );
 
-		$role = new Role();
+		$role               = new Role();
 		$role->display_name = $request->display_name;
 		$role->name         = $request->name;
 		$role->description  = $request->description;
@@ -59,7 +59,7 @@ class RoleController extends Controller {
 
 		Session::flash( 'success', 'Successfully created the new' . $role->display_name . 'role in the database' );
 
-		return redirect()->route( 'roles.show', $role->id);
+		return redirect()->route( 'roles.show', $role->id );
 
 	}
 
