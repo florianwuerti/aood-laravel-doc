@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('page_title', '') - @yield('site_title', 'WP Dokumentation')</title>
+    <title>@yield('page_title', '') - @yield('site_title', 'AOOD Dokumentation')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,61 +18,58 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar has-shadow">
         <div class="container">
-            @auth
-                <a class="navbar-brand" href="{{ url('/dashboard') }}">
-                    @yield('site_title', 'AOOD Dokumentation')
+            <div class="navbar-brand">
+                <a class="navbar-item is-paddingless brand-item" href="{{route('dashboard')}}">
+                    <img src="{{asset('images/aood-logo.png')}}" alt="AOOD logo">
                 </a>
-            @else
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    @yield('site_title', 'AOOD Dokumentation')
-                </a>
-            @endauth
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
+                <button class="button navbar-burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item is-tab">Learn</a>
+                    <a class="navbar-item is-tab">Discuss</a>
+                    <a class="navbar-item is-tab">Share</a>
+                </div> <!-- end of .navbar-start -->
 
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                <div class="navbar-end nav-menu" style="overflow: visible">
+                    @guest
+                        <a href="{{route('login')}}" class="navbar-item is-tab">Login</a>
+                        <a href="{{route('register')}}" class="navbar-item is-tab">Join the Community</a>
+                    @else
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">Hey {{Auth::user()->name}}</a>
+                            <div class="navbar-dropdown is-right">
+                                <a href="#" class="navbar-item"><span class="icon"><i class="fa fa-fw fa-user-circle-o m-r-5"></i></span>Profile</a>
+                                <a href="#" class="navbar-item"><span class="icon"><i class="fa fa-fw fa-bell m-r-5"></i></span>Notifications</a>
+                                <a href="#" class="navbar-item"><span class="icon"><i class="fa fa-fw fa-cog m-r-5"></i></span>Manage</a>
+                                <hr class="navbar-divider">
+                                <a href="{{route('logout')}}" class="navbar-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="icon"><i class="fa fa-fw fa-sign-out m-r-5"></i></span>
+                                    Logout
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
                                 </form>
                             </div>
-                        </li>
-                    @endauth
-                </ul>
+                        </div>
+                    @endguest
+                </div>
             </div>
+
         </div>
     </nav>
-
-    <main class="py-4">
+    <main>
         @yield('content')
     </main>
 </div>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

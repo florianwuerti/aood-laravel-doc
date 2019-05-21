@@ -11,10 +11,16 @@
 |
 */
 
-Route::get( '/', function () {
-	return view( 'auth.login' );
-} );
-
 Auth::routes();
 
-Route::get( '/dashboard', 'HomeController@index' )->name( 'dasboard' );
+Route::get( '/', 'HomeController@index' )->name( 'dashboard' );
+
+Route::prefix( 'manage' )->middleware( 'role:superadministrator|administrator|editor|author|contributor' )->group( function () {
+
+	Route::get( '/', 'ManageController@index' );
+	Route::get( '/dashboard', 'ManageController@dashboard' )->name( 'manage.dashboard' );
+	Route::resource( '/users', 'UserController' );
+	Route::resource( '/permissions', 'PermissionController', [ 'except' => 'destory' ] );
+	Route::resource( '/roles', 'RoleController', [ 'except' => 'destory' ] );
+
+} );

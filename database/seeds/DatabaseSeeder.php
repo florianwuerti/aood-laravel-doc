@@ -9,11 +9,9 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
-
-		DB::table( 'users' )->insert( [
-			'name'     => 'John',
-			'email'    => 'test@test.com',
-			'password' => bcrypt( '1234' ),
+		$this->call( [
+			LaratrustSeeder::class,
+			//UsersTableSeeder::class,
 		] );
 	}
 }

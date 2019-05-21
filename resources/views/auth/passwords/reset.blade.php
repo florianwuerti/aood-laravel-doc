@@ -1,65 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+
+    @if (session('status'))
+        <div class="notification is-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <div class="columns">
+        <div class="column is-one-third is-offset-one-third m-t-100">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-content">
+                    <h1 class="title">Reset Your Password</h1>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+                    <form action="{{route('password.request')}}" method="POST" role="form">
+                        {{csrf_field()}}
+                        <input type="hidden" name="token" value="{{csrf_token()}}">
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                        <div class="field">
+                            <label for="email" class="label">Email Address</label>
+                            <div class="control">
+                                <input class="input {{$errors->has('email') ? 'is-danger' : ''}}" type="text"
+                                       name="email" id="email" value="{{old('email')}}" required>
+                            </div>
+                            @if ($errors->has('email'))
+                                <p class="help is-danger">{{$errors->first('email')}}</p>
+                            @endif
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="password" class="label">Password</label>
+                                    <div class="control">
+                                        <input class="input {{$errors->has('password') ? 'is-danger' : ''}}"
+                                               type="password" name="password" id="password" required>
+                                    </div>
+                                    @if ($errors->has('password'))
+                                        <p class="help is-danger">{{$errors->first('password')}}</p>
+                                    @endif
+                                </div>
+                            </div>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="column">
+                                <div class="field">
+                                    <label for="password-confirmation" class="label">Confirm Password</label>
+                                    <div class="control">
+                                        <input class="input {{$errors->has('password_confirmation') ? 'is-danger' : ''}}"
+                                               type="password" name="password_confirmation" id="password-confirmation"
+                                               required>
+                                    </div>
+                                    @if ($errors->has('password_confirmation'))
+                                        <p class="help is-danger">{{$errors->first('password_confirmation')}}</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
+                        <button class="button is-success is-outlined is-fullwidth m-t-30">Reset Password</button>
                     </form>
-                </div>
-            </div>
+                </div> <!-- end of .card-content -->
+            </div> <!-- end of .card -->
         </div>
     </div>
-</div>
+
 @endsection

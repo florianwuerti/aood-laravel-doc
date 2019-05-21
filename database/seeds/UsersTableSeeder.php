@@ -1,7 +1,20 @@
 <?php
+
+use Illuminate\Database\Seeder;
+
 /**
- * Project: laravel-client-doc
- * User: Wuertenberger Design
- * Date: 2019-05-18
- * Time: 00:35
+ * Class UsersTableSeeder
  */
+class UsersTableSeeder extends Seeder {
+
+	/**
+	 *
+	 */
+	public function run() {
+		DB::table( 'users' )->insert( [
+			'name'     => 'John',
+			'email'    => 'test@test.com',
+			'password' => bcrypt( '1234' ),
+		] );
+	}
+}
