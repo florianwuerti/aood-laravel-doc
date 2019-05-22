@@ -1,4 +1,6 @@
 require('./bootstrap');
+require('./manage');
+
 
 window.Vue = require('vue');
 import Buefy from 'buefy';
